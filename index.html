@@ -17,7 +17,7 @@
     --glass:rgba(0,33,81,.035);
     --glass-strong:rgba(255,199,0,.14);
     --glass-border:rgba(0,33,81,.08);
-    --navy-glass:rgba(0,33,81,.88);
+    --navy-glass:#002151;
     --shadow:0 6px 20px rgba(0,33,81,.06);
     --r-lg:28px;
     --r-md:20px;
@@ -26,6 +26,8 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;scroll-padding-top:90px}
   body{
+    -webkit-tap-highlight-color:transparent;
+    -webkit-text-size-adjust:100%;
     font-family:'Outfit',system-ui,sans-serif;
     color:var(--navy);
     background:#FFFFFF;
@@ -59,10 +61,6 @@
     display:flex;align-items:center;gap:28px;
     position:relative;overflow:hidden;
     box-shadow:0 14px 40px rgba(0,33,81,.25);
-  }
-  .hero-main::after{
-    content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,199,0,.35),transparent 70%);
   }
   .logo-bubble{flex:0 0 auto;width:118px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
   .hero-kicker{
@@ -225,18 +223,63 @@
 
   @media (max-width:900px){
     .hero{grid-template-columns:1fr}
+    .hero-side{grid-template-rows:none;grid-template-columns:1fr 1fr}
     .grades{grid-template-columns:1fr}
-    .grade-tabs{flex-direction:row;overflow-x:auto}
-    .grade-tab{flex:0 0 auto;grid-template-columns:44px auto}
-    .grade-tab small{display:none}
-    .grade-tab{height:60px}
+    .grade-tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:8px}
+    .grade-tab{height:auto;padding:8px 0;grid-template-columns:1fr;justify-items:center}
+    .grade-tab .lbl{display:none}
+    .grade-tab .n{width:100%;max-width:52px;height:48px}
+    .grade-tab.active{box-shadow:none;background:transparent}
   }
   @media (max-width:600px){
-    .wrap{padding:18px 14px 40px}
-    .hero-main{flex-direction:column;align-items:flex-start;padding:28px}
-    .logo-bubble{width:90px}
-    nav.top{border-radius:var(--r-md)}
-    .grade-panel{padding:24px}
+    html{scroll-padding-top:76px}
+    .wrap{padding:14px 14px 32px}
+    .glass{border-radius:var(--r-md)}
+    .hero{gap:12px;margin-bottom:12px}
+    .hero-main{flex-direction:row;align-items:center;gap:16px;padding:22px 20px;border-radius:var(--r-md)}
+    .logo-bubble{width:64px}
+    .hero-kicker{font-size:.65rem;padding:4px 9px;margin-bottom:6px}
+    .hero h1{font-size:2rem}
+    .hero h1 small{font-size:.9rem;margin-top:6px}
+    .hero-side{gap:10px}
+    .quick{flex-direction:column;align-items:flex-start;gap:10px;padding:14px}
+    .quick .ico{width:42px;height:42px;border-radius:13px;font-size:1.1rem}
+    .quick b{font-size:.98rem;line-height:1.2}
+    .quick span{font-size:.8rem;display:block;margin-top:2px}
+    .quick .arrow{display:none}
+    nav.top{top:8px;flex-wrap:nowrap;overflow-x:auto;border-radius:999px;margin-bottom:22px;scrollbar-width:none;padding:6px}
+    nav.top::-webkit-scrollbar{display:none}
+    nav.top a{flex:0 0 auto;padding:8px 14px;font-size:.9rem}
+    section{margin-bottom:32px}
+    .sec-head{margin-bottom:12px;gap:6px}
+    .sec-head h2{font-size:1.3rem;gap:10px;line-height:1.2}
+    .sec-head h2 .tag{font-size:1.1rem;padding:3px 9px;border-radius:10px;white-space:nowrap;flex:0 0 auto}
+    .sec-head p{font-size:.9rem}
+    .grade-tab .n{font-size:1.1rem;border-radius:12px}
+    .grade-panel{padding:20px 16px}
+    .grade-panel .big{display:none}
+    .grade-panel h3{font-size:1.35rem}
+    .grade-panel .role{font-size:.98rem;margin-bottom:16px}
+    .areas{grid-template-columns:1fr;gap:10px}
+    .toolbar{padding:8px;border-radius:var(--r-md)}
+    .search{flex-basis:100%}
+    #filters{flex-wrap:nowrap!important;overflow-x:auto;width:100%;scrollbar-width:none}
+    #filters::-webkit-scrollbar{display:none}
+    .filter{flex:0 0 auto;padding:8px 13px;font-size:.88rem}
+    .tools{grid-template-columns:1fr 1fr;gap:10px}
+    .tool{flex-direction:column;align-items:flex-start;gap:10px;padding:14px;border-radius:var(--r-sm)}
+    .tool .t-ico{width:40px;height:40px;border-radius:12px;font-size:.95rem}
+    .tool b{font-size:.95rem}
+    .tool span{font-size:.78rem}
+    .playground{padding:20px 14px;border-radius:var(--r-md)}
+    .apps{grid-template-columns:1fr;gap:10px}
+    .app{padding:16px}
+    .materials{grid-template-columns:1fr}
+    footer{flex-direction:column;align-items:flex-start;padding:18px}
+  }
+  @media (max-width:360px){
+    .hero-side{grid-template-columns:1fr}
+    .tools{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -299,7 +342,7 @@
     <div class="toolbar glass">
       <label class="search">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#002151" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input type="search" id="q" placeholder="Hledat aplikaci… (např. Python, Canva)" autocomplete="off">
+        <input type="search" id="q" placeholder="Hledat aplikaci…" autocomplete="off">
       </label>
       <div id="filters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
     </div>
